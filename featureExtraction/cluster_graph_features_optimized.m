@@ -58,7 +58,7 @@ else
     % pre-calculate shortest paths (8/24/2013)
     pathlengths = cell(1,N);
     for i = 1:N
-        distance = graphshortestpath(weighted,i);
+        distance = shortestpath(weighted,i);
         pathlengths{i} = nonzeros(distance(isfinite(distance))).';
     end
     pathlengths_nonempty = pathlengths;
