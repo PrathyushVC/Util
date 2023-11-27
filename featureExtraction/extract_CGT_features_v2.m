@@ -75,44 +75,47 @@ for j = 1:length(bounds)-1
 end
 
 % find gland networks
-[numcomp,group] = graphconncomp(sparse(edges));
+group = conncomp(graph(edges));
+numcomp=unique(group)
+%[numcomp,group] = graphconncomp(graph(sparse(edges))); depreciated
+%function
 
 %max(network)
 
 for ii = 1:max(group) % define a neighborhood for each gland network (number of neighborhoods = number of networks)
     p = zeros(180/w, 180/w);
-    
+
     neighborhood_angles = discrete_angles(group == ii); % aggregate angles in gland network
     %w = 5 % size of discretization
     % p = hist(angles,180/w) %
-    
+
     %discrete_angles(i)
-    
+
     % aggregate co-occurrences
-%     n=0;
+    %     n=0;
     for jj = 1:length(bin) % find out how often each pair of bins co-occur
         for kk = jj:length(bin)
-            
+
             if sum(ismember(neighborhood_angles, bin(jj))) && sum(ismember(neighborhood_angles, bin(kk)))
                 if jj~=kk
                     p(jj,kk)=sum(ismember(neighborhood_angles, bin(jj)))* sum(ismember(neighborhood_angles, bin(kk)));
                 else
                     p(jj,kk)=sum(ismember(neighborhood_angles, bin(jj)));
-%                 p(jj,kk) = p(jj,kk) + 1; % add instances to
-%                 co-occurrence, this is wrong in the origiale version
+                    %                 p(jj,kk) = p(jj,kk) + 1; % add instances to
+                    %                 co-occurrence, this is wrong in the origiale version
                 end
             end
-%             n = n+1;
+            %             n = n+1;
         end
     end
-    
+
     c(ii) = {p./sum(p(:))}; % normalize co-occurence matrix
     feats{ii} = haralick_no_img(c{ii});
 end
 
 % remove single gland networks
 temp_network = hist(group,numcomp);
-[a,group_ind] = find(temp_network > 1); 
+[a,group_ind] = find(temp_network > 1);
 
 % remove networks that don't give co-occurrence features
 for k = 1:length(feats{1}.names)
@@ -128,7 +131,7 @@ end
 [origgroup_ind,newgroup_ind] = sort(group_ind,'ascend');
 
 % define network and apply new network indices following network prunes
-network = []; 
+network = [];
 num_connected_comp = max(newgroup_ind);
 
 for j = 1:num_connected_comp
@@ -150,14 +153,14 @@ sum(networksize(networksize>1)); % check 7035 bounds for all neighborhoods > 1 n
 for k = 1:length(feats{1}.names)
     feat = [];
     n = 0;
-%     for i = 1:numcomp
-%         if isfield(feats{i},'val')
-%             n = n + 1;
-%             feat(n) = feats{i}.val(k);
-%         else
-%             continue;
-%         end
-%     end
+    %     for i = 1:numcomp
+    %         if isfield(feats{i},'val')
+    %             n = n + 1;
+    %             feat(n) = feats{i}.val(k);
+    %         else
+    %             continue;
+    %         end
+    %     end
     for i = 1:length(feats)
         if isfield(feats{i},'val')
             n = n + 1;
@@ -166,7 +169,7 @@ for k = 1:length(feats{1}.names)
             continue
         end
     end
-    
+
     if n > 0
         CGT(k*3-2) = mean(feat);
         CGT(k*3-1) = std(feat);
@@ -185,9 +188,8 @@ info.angle_bin_size = w;
 count = 1;
 modifier = [{'mean '} {'standard deviation '} {'range '}];
 for j = 1:numel(feats{1}.names)
-for i = 1:numel(modifier)
-    CGTFeatureDescription{count} = [modifier{i} 'tensor ' feats{1}.names{j}];
-    count = count + 1;
+    for i = 1:numel(modifier)
+        CGTFeatureDescription{count} = [modifier{i} 'tensor ' feats{1}.names{j}];
+        count = count + 1;
+    end
 end
-end
-    

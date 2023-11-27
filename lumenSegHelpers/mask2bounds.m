@@ -47,8 +47,8 @@ end
 % %     plot(bounds(i).centroid_c,bounds(i).centroid_r,'r.');
 % % end
 % 
-for i = 1:numel(bounds)
-    plot([bounds(i).c bounds(i).c(1)], [bounds(i).r bounds(i).r(1)]); hold on
-    plot(bounds(i).centroid_c,bounds(i).centroid_r,'r.');
-end
+% for i = 1:numel(bounds)
+%     plot([bounds(i).c bounds(i).c(1)], [bounds(i).r bounds(i).r(1)]); hold on
+%     plot(bounds(i).centroid_c,bounds(i).centroid_r,'r.');
+% end
 
