@@ -4,7 +4,7 @@ function [feats,feature_list,params] = cluster_graph_features(bounds, varargin)
 % cluster_graph_features_networkboost(bounds)
 % cluster_graph_features_networkboost(bounds, edges)
 % cluster_graph_features_networkboost(bounds, alpha, r)
-% updated (Prathyush,2023)- switched to updated matlab implementation
+%
 % updated (George, 2015) - handling of all isolated node cases
 % updated (Ajay, 2014) - additional input options allow CCG to be constructed on-the-fly
 % updated (Ajay, 2014) - reduced complexity from O(n^2) to 0(n)
@@ -58,7 +58,17 @@ N = length(weighted);
     % pre-calculate shortest paths (8/24/2013)
     pathlengths = cell(1,N);
     for i = 1:N
-        [distance, ~, ~]  = distances(g_weighted,i);
+        
+
+        distance = zeros(1, N);
+        for j = 1:N
+            if j ~= i
+                [path, d, edgepath] = shortestpath(g_weighted, i, j)
+                distances(j) = d;
+            end
+        end
+       % [distance, ~, ~]  = graphshortestpath(weighted,i);# depreciated
+       
         pathlengths{i} = nonzeros(distance(isfinite(distance))).';
     end
     pathlengths_nonempty = pathlengths;
