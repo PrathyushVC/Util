@@ -20,7 +20,7 @@ function [feats haralickImages] = extract_all_features(bounds,img,select,mask)
 
 % Dimred2 = @(x) Dimred(x, 'GE', param);
 % EigV = cellfun(Dimred2,data,'UniformOutput',false);
-
+haralickImages=[]
 if nargin < 3
     select = [1:5];
     mask = [];
@@ -66,11 +66,11 @@ if ~isempty(intersect(select,4))
 end
 
 if ~isempty(intersect(select,5))
-    
+
     if nargin > 1
         fprintf('\nExtracting Texture Features...')
         tic
-        [feats{5} haralickImages] = extract_texture_feats(img,mask);
+        [feats{5} ,haralickImages] = extract_texture_feats(img,mask);
         %         temp = regexp(o.Description.ImageFeatures,'Haralick');
         %         temp2 = cellfun(@isempty,temp,'UniformOutput',false);
         %         description{5} = [o.Description.ImageFeatures([temp2{:}] == 0)];

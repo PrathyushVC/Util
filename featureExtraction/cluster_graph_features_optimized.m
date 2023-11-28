@@ -58,7 +58,7 @@ N = length(weighted);
     % pre-calculate shortest paths (8/24/2013)
     pathlengths = cell(1,N);
     for i = 1:N
-        [distance, ~, ~]  = distances(g_weighted,i);
+        distance  = distances(g_weighted,i);
         pathlengths{i} = nonzeros(distance(isfinite(distance))).';
     end
     pathlengths_nonempty = pathlengths;
@@ -153,7 +153,7 @@ if ~exist('sym_edges','var')
     En = 0;
     kn = 1;
 else
-    [~,network] = graphconncomp(sym_edges);
+    [~,network] = conncomp(graph(sym_edges));
 
     En = zeros(1,length(network));
     kn = zeros(1,length(network));
