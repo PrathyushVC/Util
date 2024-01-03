@@ -65,18 +65,18 @@ if ~isempty(intersect(select,4))
     toc
 end
 
-if ~isempty(intersect(select,5))
-
-    if nargin > 1
-        fprintf('\nExtracting Texture Features...')
-        tic
-        [feats{5} ,haralickImages] = extract_texture_feats(img,mask);
-        %         temp = regexp(o.Description.ImageFeatures,'Haralick');
-        %         temp2 = cellfun(@isempty,temp,'UniformOutput',false);
-        %         description{5} = [o.Description.ImageFeatures([temp2{:}] == 0)];
-        toc
-    end
-end
+% if ~isempty(intersect(select,5))
+% 
+%     if nargin > 1
+%         fprintf('\nExtracting Texture Features...')
+%         tic
+%         [feats{5} ,haralickImages] = extract_texture_feats(img,mask);
+%         %         temp = regexp(o.Description.ImageFeatures,'Haralick');
+%         %         temp2 = cellfun(@isempty,temp,'UniformOutput',false);
+%         %         description{5} = [o.Description.ImageFeatures([temp2{:}] == 0)];
+%         toc
+%     end
+% end
 
 
 %feat_description
@@ -210,3 +210,4 @@ end
 %     count = count + 1;
 % end
 % end
+
