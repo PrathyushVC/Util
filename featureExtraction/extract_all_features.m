@@ -1,6 +1,6 @@
 % December 10 2018 - Fixed bug where objects too small to extract morph
 % feats from would be included as zeros for all morph features
-function [feats haralickImages] = extract_all_features(bounds,img,select,mask)
+function [feats haralickImages,edges] = extract_all_features(bounds,img,select,mask)
 %% Extracts features from nuclei/glandular bounds
 % bounds is a struct containing the centroid and boundary info
 % img is a color or grayscale image used for computed for haralick features
@@ -48,7 +48,7 @@ if ~isempty(intersect(select,3))
     
     fprintf('\nExtracting CGT Features...')
     tic
-    feats{3} = extract_CGT_features_v2(bounds);
+    [feats{3}, c, ~, ~,network,edges]= extract_CGT_features_v2(bounds);
     %     temp = regexp(o.Description.ImageFeatures,'CGT');
     %     temp2 = cellfun(@isempty,temp,'UniformOutput',false);
     %description{3} = [o.Description.ImageFeatures([temp2{:}] == 0)];

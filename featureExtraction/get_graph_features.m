@@ -118,7 +118,7 @@ del = DT.ConnectivityList(IO,:);
 % collinear, or X is empty), an empty matrix is returned.
 
 % Get the Minimum Spanning Tree (MST) (optional: plot)
-[mst.edges mst.edgelen mst.totlen] = mstree([x,y],[],0);
+[mst.edges mst.edgelen mst.totlen] = mstree([x,y],[],1);
 
 % Record indices of inf and extreme values to skip these cells later
 Vnew        = V;
