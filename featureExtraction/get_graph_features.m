@@ -87,6 +87,7 @@ end
 [VX,VY] = voronoi(x,y);
 [V, C] = voronoin([x(:),y(:)]);
 
+
 % Okay, so:
 % VX, VY - These guys contain the vertices in a way such that
 % plot(VX,VY,'-',x,y,'.') creates the voronoi diagram. I don't actually
@@ -110,6 +111,9 @@ delConstrain = [delK(1:end-1),delK(2:end)];
 DT = delaunayTriangulation(x,y,delConstrain);
 IO = isInterior(DT);
 del = DT.ConnectivityList(IO,:);
+tri=DT.ConnectivityList;%Test change to see if the triangulation will run
+voronoi(VX,VY,tri)
+
 
 % Returns a set of triangles such that no data points are contained in any
 % triangle's circumcircle. Each row of the numt-by-3 matrix TRI defines

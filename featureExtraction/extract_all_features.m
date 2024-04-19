@@ -1,6 +1,6 @@
 % December 10 2018 - Fixed bug where objects too small to extract morph
 % feats from would be included as zeros for all morph features
-function [feats haralickImages,edges] = extract_all_features(bounds,img,select,mask)
+function [feats, haralickImages,edges] = extract_all_features(bounds,img,select,mask)
 %% Extracts features from nuclei/glandular bounds
 % bounds is a struct containing the centroid and boundary info
 % img is a color or grayscale image used for computed for haralick features
@@ -20,6 +20,7 @@ function [feats haralickImages,edges] = extract_all_features(bounds,img,select,m
 
 % Dimred2 = @(x) Dimred(x, 'GE', param);
 % EigV = cellfun(Dimred2,data,'UniformOutput',false);
+edges=[]
 haralickImages=[]
 if nargin < 3
     select = [1:5];
